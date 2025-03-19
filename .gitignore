@@ -1,0 +1,5 @@
+# Ignore the 'uploads' folder
+uploads/
+
+# Ignore all .txt files
+*.txt
