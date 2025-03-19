@@ -55,10 +55,10 @@
       </a>
     </div>
   </nav>
-   <h2>Enter Password to Access</h2>
-
-    
-    <form method="POST">
+  
+  
+  <form method="POST">
+        <h2>For Admin</h2>
         <input type="password" name="password" required placeholder="Enter your password">
         <button type="submit">Login</button>
     </form>

@@ -69,7 +69,8 @@ function renderProducts(products) {
         <div id="${carouselId}" class="flex flex-nowrap w-full h-full">
             <div class="shrink-0 w-full flex items-start justify-center relative">
                 <!-- Wrapper to maintain aspect ratio -->
-                <div class="w-full" style="padding-bottom: 75%; position: relative;">
+               <div class="w-full sm:pb-0 pb-[75%] sm:static relative ">
+
                     <img 
                         src="${imageUrls[0]}" 
                         alt="img" 

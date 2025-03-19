@@ -19,18 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handling file uploads
             $imagePaths = [];
 
-            if (isset($_FILES['images'])) {
-    $uploadedFiles = $_FILES['images'];
-    // Log files received
-    error_log("Received Files: " . print_r($uploadedFiles, true)); // Log all received files info
-
-    foreach ($uploadedFiles['tmp_name'] as $key => $tmp_name) {
-        // Log each file name and temp name
-        error_log("Processing File: " . $uploadedFiles['name'][$key] . " - Temp Name: " . $tmp_name);
-    }
-}
-
-
+            
             if (!empty($_FILES['images']['name'][0])) {
                 foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
                     $fileName = time() . '-' . $_FILES['images']['name'][$key];
@@ -43,7 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            $urls = json_encode($imagePaths); // Store image paths as JSON
+            $existingImageUrls = isset($_POST['existingImages']) ? json_decode($_POST['existingImages'], true) : [];
+
+            // $imagePaths should be an array containing the newly uploaded image URLs
+            // You need to combine the existing image URLs and the newly uploaded ones
+            $combinedImageUrls = array_merge($existingImageUrls, $imagePaths);
+
+            // Now encode the combined array into JSON
+            $urls = json_encode($combinedImageUrls);
 
             if ($action === 'create') {
                 // Insert new product
@@ -52,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$name, $created_at, $brand, $category, $price, $description, $detail, $status, $urls]);
             } else {
                 // Update existing product
+                
                 $stmt = $conn->prepare("UPDATE products SET name=?, brand=?, category=?, price=?, description=?, detail=?, status=?, urls=? WHERE id=?");
                 $stmt->execute([$name, $brand, $category, $price, $description, $detail, $status, $urls, $id]);
             }
@@ -62,14 +59,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['action'])) {
         if ($_GET['action'] === 'fetch') {
-            $stmt = $conn->query("SELECT * FROM products");
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo json_encode($products);
+            $sql = "SELECT p.*, c.cate_name 
+                    FROM products p 
+                    INNER JOIN categories c ON p.category = c.id 
+                    WHERE 1";
+
+            $result = mysqli_query($conn, $sql);
+
+            // Check for errors in the query
+            if (!$result) {
+                echo json_encode(['error' => 'Error executing query: ' . mysqli_error($conn)]);
+                exit;
+            }
+
+            $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+            // Return the products as JSON
+            echo json_encode(['products' => $products]);
         } elseif ($_GET['action'] === 'categories') {
             $stmt = $conn->query("SELECT id, cate_name FROM categories");
             $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($categories);
         }
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    // Get the raw POST data (it could be JSON or URL-encoded)
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true); // Decode JSON to an associative array
+
+    if (isset($data['id'])) {
+        $productId = $data['id']; // Get and sanitize the product ID
+
+        // Prepare the DELETE query
+        $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
+        $stmt->bind_param("s", $productId); // Bind productId as a string (UUID)
+        $stmt->execute();
+
+        // Check if the product was deleted
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(["success" => true, "message" => "Product deleted successfully"]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Cannot delete product or product not found"]);
+        }
+
+        $stmt->close();
+        $conn->close();
+    } else {
+        echo json_encode(["success" => false, "message" => "Product ID not provided"]);
+    }
+
+
 }
+
 ?>
