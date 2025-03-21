@@ -21,12 +21,45 @@ $(document).ready(function () {
       const html = products
         .map(
           (p, index) =>
-            `<div class="p-4 border mb-2 flex justify-between items-center">
-              <div>${p.name}</div>
-              <button key=${index} class="btn btn-sm btn-outline edit" data-id="${p.id}">Edit</button>
-              <button key=${index} class="btn btn-sm btn-outline delete" data-id="${p.id}">Delete</button>
-               
-            </div>`
+            `
+            <tr>
+  <!-- Action Buttons -->
+  <td class="border-b w-[35%] sm:w-[20%] px-1">
+    <div class="flex flex-row">
+      <button key=${index} class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${p.id}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="1.5" 
+             stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" 
+                d="M16.862 3.487a2.25 2.25 0 113.182 3.182L7.5 19.313 3 21l1.687-4.5L16.862 3.487z" />
+        </svg>
+      </button>
+      <button key=${index} class="btn btn-xs btn-ghost text-sm lg:text-md" data-id="${p.id}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="1.5" 
+             stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" 
+                d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </td>
+
+  <!-- Product Name (scrollable if long) -->
+  <th class="border-b w-full px-1 text-sm lg:text-md">
+    <div class="overflow-x-auto whitespace-nowrap">
+      <span class="inline-block min-w-full">${p.name}</span>
+    </div>
+  </th>
+
+  <!-- Category Name -->
+  <td class="border-b w-[30%] px-1 text-sm lg:text-md">${p.cate_name}</td>
+
+  <!-- Price -->
+  <td class="border-b w-[10%] px-1 text-sm lg:text-md">${p.price}</td>
+</tr>
+
+              `
         )
         .join("");
       $("#productList").html(html);

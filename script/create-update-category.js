@@ -10,15 +10,48 @@ $(document).ready(function () {
 
       const html = categories
         .map(
-          (c) =>
-            `<div class="border border-accent rounded-lg flex justify-between items-center join join-horizontal">
-  <div class="join-item px-2 rounded-l-md "><p>${c.cate_name}</p></div>
-  <div class="flex flex-row join-item join">
-    <button class="join-item btn btn-sm btn-outline border-none  edit" data-id="${c.id}" data-name="${c.cate_name}">Edit</button>
-    <button class="join-item btn btn-sm btn-outline border-none delete" data-id="${c.id}">Delete</button>
-  </div>
-</div>
-</div>
+          (c, index) =>
+            `
+
+<tr >
+  
+
+  <td class="w-[20%] text-center">
+    <div class="flex justify-end items-center sm:flex-row ">
+      <button class="btn btn-xs btn-ghost edit text-sm lg:text-md text-gray-500"
+              data-id="${c.id}" 
+              data-name="${c.cate_name}" 
+              title="Edit">
+        <!-- Pencil icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="1.5" 
+             stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" 
+                d="M16.862 3.487a2.25 2.25 0 113.182 3.182L7.5 19.313 3 21l1.687-4.5L16.862 3.487z" />
+        </svg>
+      </button>
+
+      <button class="btn btn-xs btn-ghost text-sm lg:text-md delete"
+              data-id="${c.id}" 
+              title="Delete">
+        <!-- Trash icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="1.5" 
+             stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" 
+                d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </td>
+  <td class="w-full border-b  px-1 text-sm lg:text-md">${c.cate_name}</td>
+</tr>
+
+
+
+
+
+
 `
         )
         .join("");

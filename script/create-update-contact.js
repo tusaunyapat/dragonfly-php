@@ -11,15 +11,33 @@ $(document).ready(function () {
       const html = contacts
         .map(
           (c) =>
-            `<div class="p-4 border mb-2 flex justify-between items-center">
-              <div>${c.name}</div>
-              <div>${c.phone}</div>
-              <div>${c.other}</div>
-              <div class="flex flex-row gap-2">
-                <button class="btn btn-sm btn-outline edit" data-id="${c.id}" data-name="${c.name}">Edit</button>
-                <button class="btn btn-sm btn-outline delete" data-id="${c.id}">Delete</button>
-              </div>
-            </div>`
+            ` <tr>
+                <td class="border-b  w-[5%] px-1">
+                  <div class="flex flex-row ">
+                    <button class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${c.id}" data-name="${c.name}">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+                      viewBox="0 0 24 24" stroke-width="1.5" 
+                      stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" 
+                        d="M16.862 3.487a2.25 2.25 0 113.182 3.182L7.5 19.313 3 21l1.687-4.5L16.862 3.487z" />
+                      </svg>
+                    </button>
+                    <button class="btn btn-xs btn-ghost delete text-sm lg:text-md" data-id="${c.id}"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+                      viewBox="0 0 24 24" stroke-width="1.5" 
+                      stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" 
+                        d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+                <th class="border-b w-[30%] px-1 text-sm lg:text-md">${c.name}</td>
+                <td class="border-b w-[20%] px-1 text-sm lg:text-md">${c.phone}</td>
+                <td class="border-b w-[45%] px-1 overflow-x-auto text-sm lg:text-md ">${c.other}</td>
+              </tr>
+
+`
         )
         .join("");
 

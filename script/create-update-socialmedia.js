@@ -11,14 +11,37 @@ $(document).ready(function () {
       const html = socialmedia
         .map(
           (s) =>
-            `<div class="p-4 border mb-2 flex justify-between items-center">
-              <div>${s.platform}</div>
-              <div>${s.url}</div>
-              <div class="flex flex-row gap-2">
-                <button class="btn btn-sm btn-outline edit" data-id="${s.id}" data-name="${s.platform}">Edit</button>
-                <button class="btn btn-sm btn-outline delete" data-id="${s.id}">Delete</button>
-              </div>
-            </div>`
+            `<tr>
+              <td class="border-b  w-[35%] px-1">
+                  <div class="flex flex-row ">
+                    <button class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${s.id}" data-name="${s.platform}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 3.487a2.25 2.25 0 113.182 3.182L7.5 19.313 3 21l1.687-4.5L16.862 3.487z" />
+                    </svg>
+                  </button>
+                  <button class="btn btn-xs btn-ghost delete text-sm lg:text-md" data-id="${s.id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+
+              <td class="border-b w-full px-1 text-sm lg:text-md">${s.platform}</td>
+
+              <td class="border-b w-[35%] max-w-xs px-1">
+                <div class="overflow-x-auto whitespace-nowrap">
+                  <a
+                    class="text-sm lg:text-md link link-warning inline-block"
+                    target="_blank"
+                    href="${s.url}"
+                  >follow link</a>
+                </div>
+              </td>
+            </tr>
+
+
+`
         )
         .join("");
 

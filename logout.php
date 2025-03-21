@@ -1,5 +1,11 @@
 <?php
+// Start the session
 session_start();
+
+// Destroy the session to log the user out
 session_destroy();
-header("Location: index.php"); // Redirect to login page
-exit();
+
+// Redirect to the login page (index.php in your case)
+header("Location: index.php");
+exit(); // Make sure no further code is executed
+?>

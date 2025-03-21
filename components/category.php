@@ -1,35 +1,51 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-    <!-- Product Form Section -->
-    <div class="col-span-1">
-        <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-md lg:text-2xl font-bold mb-4">Manage Products</h2>
-            <form id="categoryForm" enctype="multipart/form-data" >
-                <input type="hidden" id="cateId" name="id" />
-                <input type="hidden" name="action" value="create" />
+<!-- Manage Category as a collapsible panel -->
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
+  <input type="checkbox" /> <!-- checkbox-based toggle -->
 
-                <div class="mb-4">
-                    <label class="block text-sm lg:text-md">Name</label>
-                    <input
-                        type="text"
-                        id="cate_name"
-                        name="cate_name"
-                        class="input py-1 input-sm input-warning input-bordered w-full"
-                        required
-                    />
-                </div>
+  <div class="collapse-title text-lg lg:text-2xl font-bold">
+    Manage Category
+  </div>
 
-                
+  <div class="collapse-content grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
+    <!-- Category Form Section -->
+    <div>
+      <form id="categoryForm" enctype="multipart/form-data">
+        <input type="hidden" id="cateId" name="id" />
+        <input type="hidden" name="action" value="create" />
 
-                <button type="submit" id="submitCategory" class="btn btn-primary w-full">
-                    Save Category
-                </button>
-            </form>
+        <div class="mb-4">
+          <label class="block text-sm lg:text-md">Name</label>
+          <input
+            type="text"
+            id="cate_name"
+            name="cate_name"
+            class="input py-1  input-warning input-bordered w-full"
+            required
+          />
         </div>
+
+        <button type="submit" id="submitCategory" class="btn btn-primary w-full">
+          Save Category
+        </button>
+      </form>
     </div>
 
-    <!-- Product List Section -->
-<div class="col-span-1 bg-white rounded-md shadow-md px-4 py-2">
-        <h2 class="text-xl font-bold py-2 ">Category List</h2>
-        <div id="categoryList" class="mt-4 lg:max-h-[40vh] overflow-y-auto   rounded-md grid grid-cols-1 lg:grid-cols-2 gap-2"></div>
+    <!-- Category List Section -->
+    <div>
+      <h2 class="text-lg font-bold pb-2">Category List</h2>
+      <div class="lg:max-h-[70vh] rounded-md w-full overflow-auto">
+        <table class="table w-full table-fixed">
+          <thead class="sticky top-0 z-[999] bg-white">
+            <tr>
+              <th class="w-[20%] text-left px-2"></th>
+              <th class="w-[80%] text-left px-2">Category Name</th>
+            </tr>
+          </thead>
+          <tbody id="categoryList">
+            <!-- Data rows will go here -->
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>

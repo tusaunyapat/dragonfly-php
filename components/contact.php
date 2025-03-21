@@ -1,55 +1,73 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-    <!-- Product Form Section -->
-    <div class="col-span-1">
-        <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-md lg:text-2xl font-bold mb-4">Manage Contact</h2>
-            <form id="contactForm" enctype="multipart/form-data" >
-                <input type="hidden" id="contactId" name="id" />
-                <input type="hidden" name="contact-action" value="create" />
+<!-- Manage Contact as a collapsible panel -->
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 col-span-1 w-full">
+  <input type="checkbox" /> <!-- checkbox-based toggle -->
 
-                <div class="mb-4">
-                    <label class="block text-sm lg:text-md">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        class="input py-1 input-sm input-warning input-bordered w-full"
-                        required
-                    />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm lg:text-md">Phone</label>
-                    <input
-                        type="text"
-                        id="phone"
-                        name="phone"
-                        class="input py-1 input-sm input-warning input-bordered w-full"
-                        required
-                    />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm lg:text-md">Other</label>
-                    <input
-                        type="text"
-                        id="other"
-                        name="other"
-                        class="input py-1 input-sm input-warning input-bordered w-full"
-                        required
-                    />
-                </div>
+  <div class="collapse-title text-lg lg:text-2xl font-bold">
+    Manage Contact
+  </div>
 
-                
+  <div class="collapse-content text-sm grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Contact Form -->
+    <div>
+      <form id="contactForm" enctype="multipart/form-data">
+        <input type="hidden" id="contactId" name="id" />
+        <input type="hidden" name="contact-action" value="create" />
 
-                <button type="submit" id="submitContact" class="btn btn-primary w-full">
-                    Save Contact
-                </button>
-            </form>
+        <div class="mb-4">
+          <label class="block text-sm lg:text-md">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="input py-1  input-warning input-bordered w-full"
+            required
+          />
         </div>
+
+        <div class="mb-4">
+          <label class="block text-sm lg:text-md">Phone</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            class="input py-1  input-warning input-bordered w-full"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm lg:text-md">Other</label>
+          <input
+            type="text"
+            id="other"
+            name="other"
+            class="input py-1  input-warning input-bordered w-full"
+            required
+          />
+        </div>
+
+        <button type="submit" id="submitContact" class="btn btn-primary w-full">
+          Save Contact
+        </button>
+      </form>
     </div>
 
-    <!-- Product List Section -->
-    <div class="col-span-1">
-        <h2 class="text-xl font-bold mt-6">Contact List</h2>
-        <div id="contactList" class="mt-4"></div>
+    <!-- Contact List -->
+    <div>
+      <h2 class="text-lg font-bold pb-2">Contact List</h2>
+      <div class="lg:max-h-[70vh] rounded-md w-full overflow-auto">
+        <table class="table">
+          <thead class="sticky top-0 z-[999] bg-white">
+            <tr>
+              <th class="w-[5%] text-left px-1"></th>
+              <th class="w-[30%] text-left px-1">Name</th>
+              <th class="w-[20%] text-left px-1">Phone</th>
+              <th class="w-[45%] text-left px-1">Other</th>
+            </tr>
+          </thead>
+          <tbody id="contactList"></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
