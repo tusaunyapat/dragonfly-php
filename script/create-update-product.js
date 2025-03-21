@@ -102,15 +102,15 @@ $(document).ready(function () {
       console.log("pro", product);
 
       $("#productId").val(product.id);
-      $("#name").val(product.name);
+      $("#product-name").val(product.name);
       $("#brand").val(product.brand);
       $("#category").val(product.category);
       $("#price").val(product.price);
       $("#description").val(product.description);
       $("#detail").val(product.detail);
       $("#status").val(product.status);
-      $("input[name='action']").val("update");
-      $(".btn[type='submit']").text("Update Product");
+      $("input[name='product-action']").val("update");
+      $("#submitProduct").text("Update Product");
 
       // Reset image lists and variables
       imageFiles = [];
@@ -169,7 +169,7 @@ $(document).ready(function () {
         existingImages = [];
         document.getElementById("productForm").reset();
         $("input[name='action']").val("create");
-        $(".btn[type='submit']").text("Save Product");
+        $("#submitProduct").text("Save Product");
         $("#fileList").html("");
         $("#imagesList").html("");
         fetchProducts();
