@@ -2,13 +2,16 @@ $(document).ready(function () {
   let imageFiles = [];
   let existingImages = []; // To store the existing image URLs when editing a product
 
-  function fetchCategories() {
+  let action = "create";
+  function fetchproductCategories() {
     $.get("api/categories.php", function (data) {
       const categories = data.categories || [];
       $("#category").html(
         `<option value="">N/A</option>` +
           categories
-            .map((c) => `<option value="${c.id}">${c.cate_name}</option>`)
+            .map(
+              (c) => `<option value="${c.id}">${c.cate_name || "N/A"}</option>`
+            )
             .join("")
       );
     });
@@ -24,9 +27,11 @@ $(document).ready(function () {
             `
             <tr>
   <!-- Action Buttons -->
-  <td class="border-b w-[35%] sm:w-[20%] px-1">
+  <td class="border-b w-[30%] sm:w-[20%] px-1">
     <div class="flex flex-row">
-      <button key=${index} class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${p.id}">
+      <button key=${index} class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${
+              p.id
+            }">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
              viewBox="0 0 24 24" stroke-width="1.5" 
              stroke="currentColor" class="w-5 h-5">
@@ -34,7 +39,9 @@ $(document).ready(function () {
                 d="M16.862 3.487a2.25 2.25 0 113.182 3.182L7.5 19.313 3 21l1.687-4.5L16.862 3.487z" />
         </svg>
       </button>
-      <button key=${index} class="btn btn-xs btn-ghost text-sm lg:text-md" data-id="${p.id}">
+      <button key=${index} class="btn btn-xs btn-ghost text-sm lg:text-md delete" data-id="${
+              p.id
+            }">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
              viewBox="0 0 24 24" stroke-width="1.5" 
              stroke="currentColor" class="w-5 h-5">
@@ -53,7 +60,9 @@ $(document).ready(function () {
   </th>
 
   <!-- Category Name -->
-  <td class="border-b w-[30%] px-1 text-sm lg:text-md">${p.cate_name}</td>
+  <td class="border-b w-[30%] px-1 text-sm lg:text-md overflow-x-auto">${
+    p.cate_name || "ไม่ระบุ"
+  }</td>
 
   <!-- Price -->
   <td class="border-b w-[10%] px-1 text-sm lg:text-md">${p.price}</td>
@@ -66,7 +75,7 @@ $(document).ready(function () {
     });
   }
 
-  fetchCategories();
+  fetchproductCategories();
   fetchProducts();
 
   $("#images").on("change", function () {
@@ -128,7 +137,7 @@ $(document).ready(function () {
   $("#productList").on("click", ".edit", function () {
     const id = $(this).data("id");
     console.log(id);
-
+    action = "update";
     $.get("api/get-product.php", { id: id }, function (response) {
       console.log("API Response:", response);
       const product = response.product;
@@ -169,7 +178,6 @@ $(document).ready(function () {
   $("#productForm").on("submit", function (e) {
     e.preventDefault();
 
-    const action = $("input[name='action']").val();
     const formData = new FormData(this);
     const cleanedFormData = new FormData();
 
@@ -187,6 +195,7 @@ $(document).ready(function () {
 
     // Append existing images as JSON (URLs only)
     cleanedFormData.append("existingImages", JSON.stringify(existingImages));
+    cleanedFormData.append("action", action);
 
     $.ajax({
       url: "api/manage-product.php",
@@ -196,16 +205,17 @@ $(document).ready(function () {
       processData: false,
       success: function (response) {
         console.log(response);
-
+        action = "create";
         // Reset form and variables after submission
         imageFiles = [];
         existingImages = [];
+        fetchProducts();
+        fetchproductCategories();
         document.getElementById("productForm").reset();
         $("input[name='action']").val("create");
         $("#submitProduct").text("Save Product");
         $("#fileList").html("");
         $("#imagesList").html("");
-        fetchProducts();
       },
     });
   });
@@ -228,6 +238,7 @@ $(document).ready(function () {
             alert("Product deleted successfully!");
             // Optionally, you can remove the product from the page
             // $("#product-" + productId).remove();
+            fetchProducts();
           } else {
             alert(response.message);
           }

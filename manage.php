@@ -28,10 +28,10 @@
     <!-- <?php include "components/nav.php" ?> -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class=" min-h-screen w-full">
+        <?php include "components/product.php" ?>
+        <?php include "components/category.php" ?>
           <?php include "components/contact.php" ?>
           <?php include "components/socialmedia.php" ?>
-          <?php include "components/category.php" ?>
-          <?php include "components/product.php" ?>
       </div>
     </div>
       <?php include "components/footer_manage.php" ?>

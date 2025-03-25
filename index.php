@@ -14,9 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["logged_in"] = true; // Store login status in session
         header("Location: manage.php"); // Redirect to protected page
         exit();
-    } else {
-        $error = "❌ Incorrect password!" . $stored_hashed_password . password_hash("dragonfly", PASSWORD_DEFAULT) ;
-    }
+    } 
 }
 ?>
 <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
@@ -79,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         id="productModal"
         class="p-0 overflow overflow-y-auto fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-[99999] transition-all duration-300 ease-out "
         >
-        <div class=" overflow overflow-y-auto  p-4 bg-white rounded-lg lg:min-h-[40vh] lg:max-h-[80vh] max-w-[80vw] lg:max-w-[60vw] relative ">
+        <div class=" overflow overflow-y-auto  p-4 bg-white rounded-lg lg:min-h-[40vh] lg:max-h-[80vh] max-w-[80vw] min-w-[75vw] lg:max-w-[60vw] relative ">
             <!-- Close Button -->
             <button
                 id="modalClose"
@@ -140,6 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <script src="script/filterProduct.js"></script>
 <script src="script/getCategories.js"></script>
+
 
 </body>
 </html>

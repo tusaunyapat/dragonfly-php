@@ -1,9 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // fetchSocialmedia();
   fetch("api/products.php")
     .then((response) => response.json())
     .then((data) => renderProducts(data.products))
     .catch((error) => console.error("Error:", error));
+
+  fetch("api/socialmedia.php")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      fetchSocialmedia(data.socialmedia);
+    });
 });
+
+function fetchSocialmedia(socialmedia) {
+  const html_footer = socialmedia
+    .map(
+      (s) => `
+        <a href="${s.url}" class="text-sm hover:text-warning">
+          ${s.platform}
+        </a>
+      `
+    )
+    .join(""); // Important!
+
+  const footer = document.getElementById("socialmedia_footer");
+  footer.innerHTML = html_footer;
+}
 
 document
   .getElementById("filterForm")
@@ -20,7 +43,10 @@ document
 
     fetch(`api/products.php?search=${search}&category=${category}`)
       .then((response) => response.json())
-      .then((data) => renderProducts(data.products))
+      .then((data) => {
+        renderProducts(data.products);
+        console.log(data.products);
+      })
       .catch((error) => console.error("Error fetching products:", error));
   });
 
@@ -40,6 +66,7 @@ function renderProducts(products) {
   }
 
   products.forEach((product, productIndex) => {
+    console.log(product);
     const productCard = document.createElement("div");
     productCard.classList.add("w-full", "p-2");
 
@@ -94,19 +121,19 @@ function renderProducts(products) {
                             product.name
                           }</h2>
                           <span class="badge badge-warning text-black badge-sm lg:badge-md">${
-                            product.cate_name
+                            product.cate_name ? product.cate_name : "ไม่ระบุ"
                           }</span>
                       </div>
 
                       <!-- Right section: price -->
                       <div class=" md:w-1/3 text-center md:text-right ">
-                          <p class="text-xs md:text-md lg:text-lg font-bold">$${
+                          <p class="text-xs md:text-md lg:text-lg font-bold">฿${
                             product.price
                           }</p>
                       </div>
                   </div>
                   <div class="mt-2 max-h-24 overflow text-xs lg:text-md text-gray-600 w-full line-clamp-3 ">
-                      <p>brand: ${product.brand ? product.brand : "ไม่ระบุ"}</p>
+                      <p>brand: ${product.brand ? product.brand : "N/A"}</p>
                   </div>
                   <div class="mt-2 max-h-24 overflow text-xs lg:text-md text-gray-600 w-full line-clamp-3 ">
                       <p>${product.description}</p>
@@ -115,7 +142,9 @@ function renderProducts(products) {
               <button
                   class=" mt-2  view-details-btn text-xs lg:text-md items-end justify-end px-2 bg-gray-200/40 py-1 rounded-sm hover:bg-gray-200/60"
                   data-name="${product.name}"
-                  data-category="${product.cate_name}"
+                  data-category="${
+                    product.cate_name ? product.cate_name : "N/A"
+                  }"
                   data-price="${product.price}"
                   data-brand="${product.brand}"
                   data-description="${product.description}"
@@ -138,6 +167,7 @@ function renderProducts(products) {
     btn.addEventListener("click", () => {
       const name = btn.dataset.name;
       const category = btn.dataset.category;
+      console.log(category);
       const price = btn.dataset.price;
       const description = btn.dataset.description;
       const detail = btn.dataset.detail;
@@ -158,10 +188,12 @@ function renderProducts(products) {
         .join("");
 
       document.getElementById("modalProductName").textContent = name;
-      document.getElementById("modalProductCategory").textContent = category;
+      document.getElementById("modalProductCategory").textContent = category
+        ? category
+        : "ไม่ระบุ";
       document.getElementById("modalProductDetail").textContent = detail;
       document.getElementById("modalProductBrand").textContent = brand;
-      document.getElementById("modalProductPrice").textContent = `$${price}`;
+      document.getElementById("modalProductPrice").textContent = `฿${price}`;
       document.getElementById("modalProductDescription").textContent =
         description;
 

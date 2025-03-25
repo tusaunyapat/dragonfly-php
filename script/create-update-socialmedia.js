@@ -12,7 +12,7 @@ $(document).ready(function () {
         .map(
           (s) =>
             `<tr>
-              <td class="border-b  w-[35%] px-1">
+              <td class="border-b  pr-2 w-[40%] px-1">
                   <div class="flex flex-row ">
                     <button class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${s.id}" data-name="${s.platform}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -27,7 +27,7 @@ $(document).ready(function () {
                 </div>
               </td>
 
-              <td class="border-b w-full px-1 text-sm lg:text-md">${s.platform}</td>
+              <td class="border-b w-full px-1 text-sm lg:text-md overflow-x-auto">${s.platform}</td>
 
               <td class="border-b w-[35%] max-w-xs px-1">
                 <div class="overflow-x-auto whitespace-nowrap">
@@ -35,7 +35,7 @@ $(document).ready(function () {
                     class="text-sm lg:text-md link link-warning inline-block"
                     target="_blank"
                     href="${s.url}"
-                  >follow link</a>
+                  >link</a>
                 </div>
               </td>
             </tr>
@@ -46,6 +46,21 @@ $(document).ready(function () {
         .join("");
 
       $("#socialmediaList").html(html);
+
+      const html_footer = socialmedia.map(
+        (s, index) =>
+          `
+          <div class="col-span-1" textxs md:text-sm>
+            <a href=${s.url} class="text-sm hover:text-warning">
+
+            ${s.platform}
+            </a>
+          </div>
+        
+          `
+      );
+
+      $("#socialmedia_footer").html(html_footer);
     });
   }
 

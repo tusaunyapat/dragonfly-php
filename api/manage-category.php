@@ -53,30 +53,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    // Get the raw POST data (it could be JSON or URL-encoded)
     $input = file_get_contents('php://input');
-    $data = json_decode($input, true); // Decode JSON to an associative array
+    $data = json_decode($input, true);
 
     if (isset($data['id'])) {
-        $categoryId = $data['id']; // Get and sanitize the category ID
+        $categoryId = $data['id'];
 
-        // Prepare the DELETE query
-        $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
-        $stmt->bind_param("s", $categoryId); // Bind categoryId as a string (UUID)
-        $stmt->execute();
+        // Start transaction
+        $conn->begin_transaction();
 
-        // Check if the category was deleted
-        if ($stmt->affected_rows > 0) {
-            echo json_encode(["success" => true, "message" => "category deleted successfully"]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Cannot delete category or category not found"]);
+        try {
+            // Update products with this category to have 'N/A' instead
+            $updateStmt = $conn->prepare("UPDATE products SET category = 'N/A' WHERE category = ?");
+            $updateStmt->bind_param("s", $categoryId);
+            $updateStmt->execute();
+
+            if ($updateStmt->error) {
+                throw new Exception("Failed to update products");
+            }
+
+            // Delete the category
+            $deleteStmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
+            $deleteStmt->bind_param("s", $categoryId);
+            $deleteStmt->execute();
+
+            if ($deleteStmt->affected_rows > 0) {
+                // If successful, commit
+                $conn->commit();
+                echo json_encode(["success" => true, "message" => "Category deleted and related products updated"]);
+            } else {
+                // If no rows affected, rollback
+                $conn->rollback();
+                echo json_encode(["success" => false, "message" => "Cannot delete category or category not found"]);
+            }
+            
+
+            $updateStmt->close();
+            $deleteStmt->close();
+        } catch (Exception $e) {
+            $conn->rollback();
+            echo json_encode(["success" => false, "message" => "Transaction failed: " . $e->getMessage()]);
         }
 
-        $stmt->close();
         $conn->close();
     } else {
-        echo json_encode(["success" => false, "message" => "category ID not provided"]);
+        echo json_encode(["success" => false, "message" => "Category ID not provided"]);
     }
+
 
 
 }

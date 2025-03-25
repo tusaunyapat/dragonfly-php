@@ -72,8 +72,8 @@
         <table class="table w-full table-fixed">
           <thead class="sticky top-0 z-[999] bg-white">
             <tr>
-              <th class="w-[35%] sm:w-[20%] text-left px-2"></th>
-              <th class="w-[25%] text-left px-2">Product Name</th>
+              <th class="w-[25%] sm:w-[20%] text-left px-2"></th>
+              <th class="w-[25%] text-left px-2">Name</th>
               <th class="w-[25%] text-left px-2">Category</th>
               <th class="w-[15%] text-left px-2">Price</th>
             </tr>

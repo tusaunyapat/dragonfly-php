@@ -1,7 +1,18 @@
 $(document).ready(function () {
   let currentCategoryId = null;
   let action = "create"; // This will determine whether we are creating or updating
-
+  function fetchproductCategories() {
+    $.get("api/categories.php", function (data) {
+      const categories = data.categories || [];
+      console.log("from category product");
+      $("#category").html(
+        `<option value="">N/A</option>` +
+          categories
+            .map((c) => `<option value="${c.id}">${c.cate_name}</option>`)
+            .join("")
+      );
+    });
+  }
   // Fetch all categories
   function fetchCategories() {
     $.get("api/categories.php", function (data) {
@@ -44,7 +55,7 @@ $(document).ready(function () {
       </button>
     </div>
   </td>
-  <td class="w-full border-b  px-1 text-sm lg:text-md">${c.cate_name}</td>
+  <td class="w-full border-b  px-1 text-sm lg:text-md overflow-x-auto">${c.cate_name}</td>
 </tr>
 
 
@@ -78,9 +89,12 @@ $(document).ready(function () {
       success: function (response) {
         console.log(response);
         $("#submitCategory").text("Save Category"); // Change button text to 'Update'
-
+        action = "create";
         document.getElementById("categoryForm").reset(); // Reset form
         fetchCategories(); // Refresh category list
+        fetchproductCategories();
+        console.log("start");
+        console.log("stop");
       },
       error: function (xhr, status, error) {
         console.error("Error:", error);
@@ -121,6 +135,7 @@ $(document).ready(function () {
           if (response.success) {
             alert("Category deleted successfully!");
             fetchCategories(); // Refresh the category list
+            fetchproductCategories();
           } else {
             alert(response.message);
           }

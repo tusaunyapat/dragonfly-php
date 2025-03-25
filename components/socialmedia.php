@@ -48,9 +48,9 @@
         <table class="table w-full table-fixed">
           <thead class="sticky top-0 z-[999] bg-white">
             <tr>
-              <th class="w-[10%] text-left px-2"></th>
-              <th class="w-[40%] text-left px-2">Platform</th>
-              <th class="w-[50%] text-left px-2">URL</th>
+              <th class="w-[40%] text-left px-2"></th>
+              <th class="w-full text-left px-2">Platform</th>
+              <th class="w-[30%] text-left px-2">URL</th>
             </tr>
           </thead>
           <tbody id="socialmediaList">

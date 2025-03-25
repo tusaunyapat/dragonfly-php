@@ -37,8 +37,8 @@
         <table class="table w-full table-fixed">
           <thead class="sticky top-0 z-[999] bg-white">
             <tr>
-              <th class="w-[20%] text-left px-2"></th>
-              <th class="w-[80%] text-left px-2">Category Name</th>
+              <th class="w-[30%] sm:w-[20%] text-left px-2"></th>
+              <th class="w-[70%] sm:w-[80%] text-left px-2">Category Name</th>
             </tr>
           </thead>
           <tbody id="categoryList">

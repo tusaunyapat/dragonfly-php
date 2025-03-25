@@ -12,7 +12,7 @@ $category = mysqli_real_escape_string($conn, $category);
 // Build SQL query to join products and categories
 $sql = "SELECT p.*, c.cate_name 
         FROM products p 
-        INNER JOIN categories c ON p.category = c.id 
+        LEFT JOIN categories c ON p.category = c.id 
         WHERE status = 'ACTIVE'";
 
 if (!empty($search)) {

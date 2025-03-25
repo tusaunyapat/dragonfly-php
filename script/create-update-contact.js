@@ -12,7 +12,7 @@ $(document).ready(function () {
         .map(
           (c) =>
             ` <tr>
-                <td class="border-b  w-[5%] px-1">
+                <th class="border-b  w-[5%] px-1">
                   <div class="flex flex-row ">
                     <button class="btn btn-xs btn-ghost edit text-sm lg:text-md" data-id="${c.id}" data-name="${c.name}">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
@@ -31,7 +31,7 @@ $(document).ready(function () {
                       </svg>
                     </button>
                   </div>
-                </td>
+                </th>
                 <th class="border-b w-[30%] px-1 text-sm lg:text-md">${c.name}</td>
                 <td class="border-b w-[20%] px-1 text-sm lg:text-md">${c.phone}</td>
                 <td class="border-b w-[45%] px-1 overflow-x-auto text-sm lg:text-md ">${c.other}</td>
