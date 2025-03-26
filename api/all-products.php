@@ -5,28 +5,52 @@ require '../db.php';
 
 
 // Build SQL query to join products and categories
-$sql = "SELECT p.*, c.cate_name 
-        FROM products p 
-        LEFT JOIN categories c ON p.category = c.id 
-        WHERE 1";
+$sql = "SELECT *
+        FROM products";
+
+
 
 $result = mysqli_query($conn, $sql);
 
-// Check for errors in the query
-if (!$result) {
-    echo json_encode(['error' => 'Error executing query: ' . mysqli_error($conn)]);
-    exit;
-}
+$products = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $products[$row['id']] = [
+        'id' => $row['id'],
+        'name' => $row['name'],
+        'price' => $row['price'],
+        'status' => $row['status'],
+        'brand' => $row['brand'],
+        'description' => $row['description'],
+        'urls' => $row['urls'],
+        'detail' => $row['detail'],
+        'category' => [] // Placeholder for categories
+    ];
 
-$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-foreach ($products as &$product) {
-    if (is_null($product['cate_name'])) {
-        $product['cate_name'] = 'N/A';
+    $categoryIds = json_decode($row['category']);
+    
+    // Loop through each category ID to fetch the category name
+    if (is_array($categoryIds)) {
+        foreach ($categoryIds as $categoryId) {
+            // Fetch category name from the categories table
+            $categoryQuery = "SELECT cate_name FROM categories WHERE id = '$categoryId'";
+            $categoryResult = mysqli_query($conn, $categoryQuery);
+            if ($categoryResult) {
+                $category = mysqli_fetch_assoc($categoryResult);
+                if ($category) {
+                    // Add the category name to the product's category array
+                    $products[$row['id']]['category'][] = [
+                        'id' => $categoryId,
+                        'name' => $category['cate_name']
+                    ];
+                }
+            }
+        }
     }
 }
 
-// Return the products as JSON
-echo json_encode(['products' => $products]);
+
+
+// Convert associative array to indexed array for JSON response
+echo json_encode(['products' => array_values($products)]);
 exit;
 ?>

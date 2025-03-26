@@ -2,7 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // fetchSocialmedia();
   fetch("api/products.php")
     .then((response) => response.json())
-    .then((data) => renderProducts(data.products))
+    .then((data) => {
+      console.log(data.products);
+      renderProducts(data.products);
+    })
     .catch((error) => console.error("Error:", error));
 
   fetch("api/socialmedia.php")
@@ -91,7 +94,7 @@ function renderProducts(products) {
      <button
   class="card shadow-md p-2 h-full w-full text-left view-details-btn"
   data-name="${product.name}"
-  data-category="${product.cate_name ? product.cate_name : "N/A"}"
+  data-category="${product.category ? product.category : "N/A"}"
   data-price="${product.price}"
   data-brand="${product.brand}"
   data-description="${product.description}"
@@ -127,7 +130,13 @@ function renderProducts(products) {
               product.name
             }</h2>
             <span class="badge badge-warning text-black badge-sm lg:badge-md">
-              ${product.cate_name ? product.cate_name : "ไม่ระบุ"}
+            <ul class="flex flex-row gap-1 ">
+            ${
+              product.category
+                ? product.category.map((c) => `<li>${c.name}</li>`)
+                : "N/A"
+            }
+            </ul>
             </span>
           </div>
 

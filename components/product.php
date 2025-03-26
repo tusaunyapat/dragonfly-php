@@ -1,6 +1,6 @@
 <!-- Manage Product as a collapsible panel -->
 <div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
-  <input type="checkbox" /> <!-- checkbox toggle -->
+  <input type="checkbox" checked="checked"/> <!-- checkbox toggle -->
 
   <div class="collapse-title text-lg lg:text-2xl font-bold">
     Manage Products
@@ -25,7 +25,7 @@
 
         <div class="mb-4">
           <label class="block text-sm lg:text-md">Category</label>
-          <select id="category" name="category" class="select select-bordered select-sm select-warning w-full" required></select>
+          <div id="category" name="category" class="w-full flex flex-row flex-wrap gap-4 py-2"></div>
         </div>
 
         <div class="mb-4">
@@ -74,7 +74,7 @@
             <tr>
               <th class="w-[25%] sm:w-[20%] text-left px-2"></th>
               <th class="w-[25%] text-left px-2">Name</th>
-              <th class="w-[25%] text-left px-2">Category</th>
+              <th class="w-[25%] text-left px-2">Status</th>
               <th class="w-[15%] text-left px-2">Price</th>
             </tr>
           </thead>

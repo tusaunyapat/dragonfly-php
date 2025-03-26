@@ -7,12 +7,18 @@ $(document).ready(function () {
     $.get("api/categories.php", function (data) {
       const categories = data.categories || [];
       $("#category").html(
-        `<option value="">N/A</option>` +
-          categories
-            .map(
-              (c) => `<option value="${c.id}">${c.cate_name || "N/A"}</option>`
-            )
-            .join("")
+        categories
+          .map(
+            (c) =>
+              `
+              <div class="flex flex-row gap-1">
+              
+              <input name="category[]" type="checkbox" class="checkbox checkbox-sm checkbox-warning" value="${
+                c.id
+              }"></input>
+              <label class="text-sm">${c.cate_name || "N/A"}</label></div>`
+          )
+          .join("")
       );
     });
   }
@@ -59,10 +65,20 @@ $(document).ready(function () {
     </div>
   </th>
 
-  <!-- Category Name -->
-  <td class="border-b w-[30%] px-1 text-sm lg:text-md overflow-x-auto">${
-    p.cate_name || "ไม่ระบุ"
-  }</td>
+  <!-- Status -->
+<td class="border-b px-1 overflow-x-auto ">
+  <p class="badge badge-outline ${
+    p.status === "DRAFT"
+      ? "badge-neutral"
+      : p.status === "ACTIVE"
+      ? "badge-success"
+      : "badge-error"
+  }">
+  ${p.status}
+</p>
+
+</td>
+
 
   <!-- Price -->
   <td class="border-b w-[10%] px-1 text-sm lg:text-md">${p.price}</td>
@@ -137,16 +153,26 @@ $(document).ready(function () {
   $("#productList").on("click", ".edit", function () {
     const id = $(this).data("id");
     console.log(id);
+    $("#category input[type='checkbox']").prop("checked", false);
     action = "update";
     $.get("api/get-product.php", { id: id }, function (response) {
       console.log("API Response:", response);
+
       const product = response.product;
       console.log("pro", product);
 
       $("#productId").val(product.id);
       $("#product-name").val(product.name);
       $("#brand").val(product.brand);
-      $("#category").val(product.category);
+      // Assuming the checkboxes have a value corresponding to category id
+
+      product.category.forEach((category) => {
+        $(`#category input[type="checkbox"][value="${category.id}"]`).prop(
+          "checked",
+          true
+        );
+      });
+
       $("#price").val(product.price);
       $("#description").val(product.description);
       $("#detail").val(product.detail);
@@ -183,10 +209,17 @@ $(document).ready(function () {
 
     // Add form data excluding images[]
     for (let [key, value] of formData.entries()) {
-      if (key !== "images[]") {
+      if (key !== "images[]" && key !== "category") {
         cleanedFormData.append(key, value);
       }
     }
+
+    const checkedCategories = [];
+
+    // Get all checked checkboxes with name "category[]"
+    $('input[name="category[]"]:checked').each(function () {
+      checkedCategories.push($(this).val()); // Push the value of the checked checkbox (category ID)
+    });
 
     // Append new images
     imageFiles.forEach((file) => {
@@ -196,6 +229,7 @@ $(document).ready(function () {
     // Append existing images as JSON (URLs only)
     cleanedFormData.append("existingImages", JSON.stringify(existingImages));
     cleanedFormData.append("action", action);
+    cleanedFormData.append("category", JSON.stringify(checkedCategories));
 
     $.ajax({
       url: "api/manage-product.php",
