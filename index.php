@@ -64,9 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="text" id="search" class="form-control mb-2" placeholder="Search product...">
         <div class="flex flex-row gap-2 items-center">
             <select id="category" class="form-select ">
-                <option value="">All Categories</option>
+                <option value="">ทั้งหมด</option>
             </select>
-            <button type="submit" class="btn btn-sm p-2 btn-outline btn-warning">Search</button>
+            <button type="submit" class="btn btn-sm p-2 btn-outline btn-warning">ค้นหา</button>
         </div>
     </form>
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         id="productModal"
         class="p-0 overflow overflow-y-auto fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-[99999] transition-all duration-300 ease-out "
         >
-        <div class=" overflow overflow-y-auto  p-4 bg-white rounded-lg lg:min-h-[40vh] lg:max-h-[80vh] max-w-[80vw] min-w-[75vw] lg:max-w-[60vw] relative ">
+        <div class=" overflow overflow-y-auto  p-4 bg-white rounded-lg max-h-[70vh] lg:min-h-[40vh] lg:max-h-[80vh] max-w-[80vw] min-w-[75vw] lg:min-w-[50vw] lg:max-w-[70vw] relative ">
             <!-- Close Button -->
             <button
                 id="modalClose"
@@ -86,15 +86,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 &times;
             </button>
 
-            <div class="flex flex-col md:flex-row  gap-4 py-2 h-full justify-start md:justify-center">
+            <div class="flex flex-col md:flex-row  gap-4 py-2 h-full justify-start md:justify-center max-h-[70vh] lg:min-h-[40vh] lg:max-h-[80vh] max-w-[80vw] min-w-[75vw] lg:min-w-[50vw] lg:max-w-[70vw]">
                 <!-- Left: Image Carousel -->
-                <div class="w-full md:w-1/3 lg:w-1/2 rounded-lg relative  " >
-                    <div class="overflow-x-auto snap-x snap-mandatory">
-                        <div id="modalCarousel" class="flex flex-nowrap overflow-y-none w-full">
+                <div class="w-full md:w-1/2 rounded-lg relative " >
+                    <div class="overflow-x-auto snap-x snap-mandatory h-full w-full">
+                        <div id="modalCarousel" class="flex flex-nowrap overflow-y-none h-full">
                             <!-- Images will be injected here -->
                         </div>
                     </div>
                 </div>
+
+                
 
                 <!-- Right: Product Details -->
                 <div class=" w-full md:w-1/2 flex flex-col py-2 ">

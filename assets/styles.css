@@ -1,9 +1,0 @@
-.carousel-track {
-  display: flex;
-  overflow-x: auto; /* Enables horizontal scrolling */
-  scroll-snap-type: x mandatory; /* Optional: for better snapping behavior */
-}
-
-.carousel-track > .flex-shrink-0 {
-  scroll-snap-align: center; /* Optional: for image snapping in the center */
-}
