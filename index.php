@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Search & Filter Form -->
     <form id="filterForm" class="mb-3">
-        <input type="text" id="search" class="form-control mb-2" placeholder="Search product...">
+        <input type="text" id="search" class="form-control mb-2" placeholder="ค้นหาสินค้า...">
         <div class="flex flex-row gap-2 items-center">
             <select id="category" class="form-select ">
                 <option value="">ทั้งหมด</option>
@@ -72,6 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Product List -->
     <div id="productGrid" class="row"></div>
+
+    
+    <div class="fixed bottom-20 right-10 " id="lineofficial">
+       
+        
+    </div>
     <!-- Product Modal -->
     <div
         id="productModal"

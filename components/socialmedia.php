@@ -1,9 +1,9 @@
 <!-- Manage Social Media as a collapsible panel -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full rounded-xl">
   <input type="checkbox" /> <!-- checkbox-based toggle -->
 
   <div class="collapse-title text-lg lg:text-2xl font-bold">
-    Manage Social Media
+    จัดการ Social Media
   </div>
 
   <div class="collapse-content grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
@@ -14,7 +14,7 @@
         <input type="hidden" name="socialmedia-action" value="create" />
 
         <div class="mb-4">
-          <label class="block text-sm lg:text-md">Platform</label>
+          <label class="block text-sm lg:text-md">ชื่อ Social Media</label>
           <input
             type="text"
             id="platform"
@@ -36,20 +36,20 @@
         </div>
 
         <button type="submit" id="submitSocialmedia" class="btn btn-primary w-full">
-          Save Social Media
+          เพิ่ม Social Media
         </button>
       </form>
     </div>
 
     <!-- Social Media List Section -->
     <div>
-      <h2 class="text-lg font-bold pb-2">Social Media List</h2>
+      <h2 class="text-lg font-bold pb-2">รายการ Social Media</h2>
       <div class="lg:max-h-[40vh] rounded-md w-full overflow-auto">
         <table class="table w-full table-fixed">
           <thead class="sticky top-0 z-[999] bg-white">
             <tr>
               <th class="w-[40%] text-left px-2"></th>
-              <th class="w-full text-left px-2">Platform</th>
+              <th class="w-full text-left px-2">ชื่อ Social Media</th>
               <th class="w-[30%] text-left px-2">URL</th>
             </tr>
           </thead>

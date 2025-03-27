@@ -1,9 +1,9 @@
 <!-- Manage Category as a collapsible panel -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full rounded-xl ">
   <input type="checkbox" /> <!-- checkbox-based toggle -->
 
   <div class="collapse-title text-lg lg:text-2xl font-bold">
-    Manage Category
+    จัดการหมวดหมู่สินค้า
   </div>
 
   <div class="collapse-content grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
@@ -14,7 +14,7 @@
         <input type="hidden" name="action" value="create" />
 
         <div class="mb-4">
-          <label class="block text-sm lg:text-md">Name</label>
+          <label class="block text-sm lg:text-md">ชื่อหมวดหมู่</label>
           <input
             type="text"
             id="cate_name"
@@ -25,20 +25,20 @@
         </div>
 
         <button type="submit" id="submitCategory" class="btn btn-primary w-full">
-          Save Category
+          เพิ่มหมวดหมู่
         </button>
       </form>
     </div>
 
     <!-- Category List Section -->
     <div>
-      <h2 class="text-lg font-bold pb-2">Category List</h2>
+      <h2 class="text-lg font-bold pb-2">รายการหมวดหมู่</h2>
       <div class="lg:max-h-[70vh] rounded-md w-full overflow-auto">
         <table class="table w-full table-fixed">
           <thead class="sticky top-0 z-[999] bg-white">
             <tr>
               <th class="w-[30%] sm:w-[20%] text-left px-2"></th>
-              <th class="w-[70%] sm:w-[80%] text-left px-2">Category Name</th>
+              <th class="w-[70%] sm:w-[80%] text-left px-2">ชื่อหมวดหมู่</th>
             </tr>
           </thead>
           <tbody id="categoryList">

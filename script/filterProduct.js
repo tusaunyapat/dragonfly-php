@@ -14,6 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(data);
       fetchSocialmedia(data.socialmedia);
     });
+
+  fetch("api/contact.php")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      fetchContacts(data.contacts);
+    });
 });
 
 function fetchSocialmedia(socialmedia) {
@@ -28,6 +35,35 @@ function fetchSocialmedia(socialmedia) {
     .join(""); // Important!
 
   const footer = document.getElementById("socialmedia_footer");
+  footer.innerHTML = html_footer;
+
+  const lineofficial = document.getElementById("lineofficial");
+  const linelink = socialmedia.filter((s) =>
+    s.platform.toLowerCase().includes("line")
+  )[0];
+  console.log("line link ; ", linelink);
+  lineofficial.innerHTML = `
+     <a href=${linelink.url} >
+
+            <img src="uploads/LINE_Brand_icon.png" width="80" height="80" class="hover:brightness-75"/>
+        </a>
+  `;
+}
+
+function fetchContacts(contact) {
+  const html_footer = contact
+    .map(
+      (c) => `
+       <div class="grid grid-cols-12 gap-2">
+          <p class="text-sm col-span-3">${c.name}</p>
+          <p class="text-sm col-span-4">${c.phone}</p>
+          <p class="text-sm col-span-5">${c.other}</p>
+       </div>
+      `
+    )
+    .join(""); // Important!
+
+  const footer = document.getElementById("contact_footer");
   footer.innerHTML = html_footer;
 }
 

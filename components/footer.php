@@ -8,8 +8,14 @@
     </p>
   </aside>
   <nav>
-    <h6 class="footer-title">Social</h6>
-    <div class="flex flex-col  gap-4" id="socialmedia_footer">
+    <h6 class="footer-title">ช่องทาง Social media</h6>
+    <div class="flex flex-col  gap-2" id="socialmedia_footer">
+      
+    </div>
+  </nav>
+  <nav class="w-full">
+    <h6 class="footer-title">ช่องทางการติดต่อทางร้าน</h6>
+    <div class="flex flex-col  gap-2" id="contact_footer">
       
     </div>
   </nav>
@@ -19,8 +25,8 @@
   
   
   <form method="POST">
-        <h2>For Admin</h2>
-        <input type="password" name="password" required placeholder="Enter your password">
-        <button type="submit">Login</button>
+         <h6 class="footer-title">สำหรับ admin</h6>
+        <input type="password" name="password" class="input input-warning " required placeholder="กรอกรหัสผ่าน">
+        <button type="submit">เข้าสู่ระบบ</button>
     </form>
 </footer>

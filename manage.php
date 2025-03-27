@@ -27,7 +27,7 @@
     <!-- MANAGE PRODUCT -->
     <!-- <?php include "components/nav.php" ?> -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class=" min-h-screen w-full">
+      <div class=" min-h-screen w-full flex flex-col gap-4">
         <?php include "components/product.php" ?>
         <?php include "components/category.php" ?>
           <?php include "components/contact.php" ?>
